@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import Routes from './routes/Routes'
 import { useSocket } from './hooks/useSocket'
 
 const App = () => {
@@ -12,7 +13,7 @@ const App = () => {
     }
   }, [socket])
 
-  return <div>This works</div>
+  return <Routes />
 }
 
 export default App
