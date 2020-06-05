@@ -32,6 +32,14 @@ Messages
 }
 .messages .message .timestamp {
   position: absolute;
+  bottom: -28px;
+  left: -5px;
+  font-size: 9px;
+  color: rgba(7, 6, 6, 0.3);
+}
+
+.messages .message .username {
+  position: absolute;
   bottom: -15px;
   left: -5px;
   font-size: 9px;

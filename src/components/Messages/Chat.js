@@ -5,6 +5,7 @@ import { useSocket } from '../../hooks/useSocket'
 import './chat.css'
 
 const Chat = () => {
+  const [typing, setTyping] = useState(false)
   const [message, setMessage] = useState('')
   const [messages, addMessages] = useState([])
   const socket = useSocket('http://127.0.0.1:5000')
@@ -14,8 +15,20 @@ const Chat = () => {
     }
     if (socket) {
       socket.on('message', handleEvent)
+      socket.on('typing', timeout)
     }
   }, [socket])
+
+  useEffect(() => {
+    return () => {
+      setTyping(false)
+      clearTimeout(timeout)
+    }
+  }, [message])
+
+  const timeout = setTimeout(() => {
+    setTyping(true)
+  }, 2000)
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
@@ -54,18 +67,28 @@ const Chat = () => {
         className="messages"
         style={{ height: '30vh', overflowY: 'scroll', padding: 20 }}
       >
-        {/* <div className="message">
+        <div className="message">
           <figure class="avatar">
             <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" />
           </figure>
           <span className="message-content">This is an external message</span>
           <div className="timestamp">28/12/1989</div>
-        </div> */}
+        </div>
+
+        {typing && (
+          <div className="message">
+            <figure class="avatar">
+              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" />
+            </figure>
+            <span className="message-content">Typing ...</span>
+          </div>
+        )}
 
         {messages.map((mes) => (
           <div className="message message-personal">
-            <div className="message-content">{mes}</div>
-            <div className="timestamp">28/12/1989</div>
+            <div className="message-content">{mes.text}</div>
+            <div className="timestamp">{mes.time}</div>
+            <div className="username">{mes.username}</div>
           </div>
         ))}
       </div>
