@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Button, Card, Input, PageHeader, Divider } from 'antd'
+import moment from 'moment'
 import { SendOutlined } from '@ant-design/icons'
 import { useSocket } from '../../hooks/useSocket'
 import { store } from '../../context/store.js'
@@ -8,6 +9,8 @@ import './chat.css'
 const Chat = () => {
   const [typing, setTyping] = useState(false)
   const [message, setMessage] = useState('')
+  const [placeholder, setPlaceholder] = useState('Type something...')
+  const [botMessages, setBotMessage] = useState([])
   const [messages, addMessages] = useState([])
   const globalState = useContext(store)
   const socket = useSocket('http://127.0.0.1:5000')
@@ -30,7 +33,17 @@ const Chat = () => {
     if (event.key === 'Enter') {
       const botCommand = message.charAt(0)
       if (botCommand === '/') {
-        console.log('bot command')
+        var s2 = message.substr(1)
+        if (s2 === 'time') {
+          setBotMessage([
+            ...botMessages,
+            { text: `Current GMT Time: ${moment().format('hh:mm a')}` },
+          ])
+        } else {
+          setMessage('')
+          setPlaceholder(`{{ Command ${s2}, not found! }}`)
+        }
+        console.log(s2)
       } else {
         socket.emit('chatMessage', message)
         setMessage('')
@@ -54,6 +67,7 @@ const Chat = () => {
     setMessage(value)
     setTyping(true)
   }
+
   return (
     <Card style={{ width: '65%' }}>
       <PageHeader
@@ -76,6 +90,13 @@ const Chat = () => {
         className="messages"
         style={{ height: '30vh', overflowY: 'scroll', padding: 20 }}
       >
+        {botMessages.map((mes) => (
+          <div className={`message`}>
+            <div className="message-content">{mes.text}</div>
+            <div className="timestamp">{mes.time}</div>
+            <div className="username">BOT</div>
+          </div>
+        ))}
         {messages.map((mes) => (
           <div
             className={`message ${
@@ -91,7 +112,7 @@ const Chat = () => {
       <Divider />
       <Input
         addonAfter={<SendOutlined onClick={() => handleSubmitMessage()} />}
-        placeholder="Type something ...."
+        placeholder={placeholder}
         onChange={handleChange}
         onKeyPress={handleKeyPress}
         value={message}
