@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Button, Card, Input, PageHeader, Divider } from 'antd'
 import { SendOutlined } from '@ant-design/icons'
 import { useSocket } from '../../hooks/useSocket'
+import { store } from '../../context/store.js'
 import './chat.css'
 
 const Chat = () => {
   const [typing, setTyping] = useState(false)
   const [message, setMessage] = useState('')
   const [messages, addMessages] = useState([])
+  const globalState = useContext(store)
   const socket = useSocket('http://127.0.0.1:5000')
   useEffect(() => {
+    console.log(globalState)
     const handleEvent = (payload) => {
       addMessages((prevState) => [...prevState, payload])
     }
