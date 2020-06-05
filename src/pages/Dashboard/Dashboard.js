@@ -1,31 +1,30 @@
-import React from 'react'
-import { Layout, Menu } from 'antd'
-import { DesktopOutlined, PieChartOutlined } from '@ant-design/icons'
-import SearchInput from '../../components/Messages/SearchInput'
-import Chat from '../../components/Messages/Chat'
+import React from "react";
+import { Layout, Menu } from "antd";
+import { DesktopOutlined, PieChartOutlined } from "@ant-design/icons";
+import Message from "../Message/";
 
-const { Header, Content, Sider } = Layout
+const { Header, Content, Sider } = Layout;
 
 class Dashboard extends React.Component {
   state = {
     collapsed: false,
-  }
+  };
 
   onCollapse = (collapsed) => {
-    console.log(collapsed)
-    this.setState({ collapsed })
-  }
+    console.log(collapsed);
+    this.setState({ collapsed });
+  };
 
   render() {
     return (
-      <Layout style={{ minHeight: '100vh' }}>
+      <Layout style={{ minHeight: "100vh" }}>
         <Sider
           collapsible
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
         >
           <div className="logo" />
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+          <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
             <Menu.Item key="1" icon={<PieChartOutlined />}>
               #Channel1
             </Menu.Item>
@@ -39,14 +38,13 @@ class Dashboard extends React.Component {
         </Sider>
         <Layout className="site-layout">
           <Header className="site-layout-background" style={{ padding: 0 }} />
-          <Content style={{ margin: '0 16px' }}>
-            <SearchInput />
-            <Chat />
+          <Content style={{ margin: "0 16px" }}>
+            <Message />
           </Content>
         </Layout>
       </Layout>
-    )
+    );
   }
 }
 
-export default Dashboard
+export default Dashboard;

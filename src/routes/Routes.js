@@ -1,34 +1,33 @@
-import React from 'react'
+import React from "react";
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
-} from 'react-router-dom'
-import Dashboard from '../pages/Dashboard'
-import Login from '../pages/Auth/Login'
+} from "react-router-dom";
+import Dashboard from "../pages/Dashboard";
+import Login from "../pages/Auth/Login";
 
 const Routes = () => {
   const isLoggedIn = () => {
-    return localStorage.getItem('authTokens') != null
-  }
+    return localStorage.getItem("authTokens") != null;
+  };
   return (
     <Router>
       <Switch>
-        {!isLoggedIn() && <Route path="/login" component={Login} />}
+        {isLoggedIn() && <Route path="/login" component={Login} />}
         <Route
           path="/"
           render={(props) => {
-            if (isLoggedIn()) {
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              return <Dashboard {...props} />
+            if (!isLoggedIn()) {
+              return <Dashboard {...props} />;
             }
-            return <Redirect to="/login" />
+            return <Redirect to="/login" />;
           }}
         />
       </Switch>
     </Router>
-  )
-}
+  );
+};
 
-export default Routes
+export default Routes;
