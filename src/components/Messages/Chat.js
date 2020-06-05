@@ -13,26 +13,27 @@ const Chat = () => {
     const handleEvent = (payload) => {
       addMessages((prevState) => [...prevState, payload])
     }
+    const handleTimeout = () => {
+      setTyping(!typing)
+    }
     if (socket) {
       socket.on('message', handleEvent)
-      socket.on('typing', timeout)
+      socket.on('typing', handleTimeout)
     }
   }, [socket])
-
-  const timeout = setTimeout(() => {
-    setTyping(true)
-  }, 2000)
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       socket.emit('chatMessage', message)
       setMessage('')
+      setTyping(false)
     }
   }
 
   const handleSubmitMessage = () => {
     socket.emit('chatMessage', message)
     setMessage('')
+    setTyping(false)
   }
 
   const handleChange = ({ target: { value } }) => {
