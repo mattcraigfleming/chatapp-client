@@ -11,6 +11,7 @@ const Chat = () => {
   const [messages, addMessages] = useState([])
   const globalState = useContext(store)
   const socket = useSocket('http://127.0.0.1:5000')
+
   useEffect(() => {
     console.log(globalState)
     const handleEvent = (payload) => {
@@ -27,16 +28,26 @@ const Chat = () => {
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      socket.emit('chatMessage', message)
-      setMessage('')
-      setTyping(false)
+      const botCommand = message.charAt(0)
+      if (botCommand === '/') {
+        console.log('bot command')
+      } else {
+        socket.emit('chatMessage', message)
+        setMessage('')
+        setTyping(false)
+      }
     }
   }
 
   const handleSubmitMessage = () => {
-    socket.emit('chatMessage', message)
-    setMessage('')
-    setTyping(false)
+    const botCommand = message.charAt(0)
+    if (botCommand === '/') {
+      console.log('bot command')
+    } else {
+      socket.emit('chatMessage', message)
+      setMessage('')
+      setTyping(false)
+    }
   }
 
   const handleChange = ({ target: { value } }) => {
@@ -65,25 +76,12 @@ const Chat = () => {
         className="messages"
         style={{ height: '30vh', overflowY: 'scroll', padding: 20 }}
       >
-        <div className="message">
-          <figure class="avatar">
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" />
-          </figure>
-          <span className="message-content">This is an external message</span>
-          <div className="timestamp">28/12/1989</div>
-        </div>
-
-        {typing && (
-          <div className="message">
-            <figure class="avatar">
-              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" />
-            </figure>
-            <span className="message-content">Typing ...</span>
-          </div>
-        )}
-
         {messages.map((mes) => (
-          <div className="message message-personal">
+          <div
+            className={`message ${
+              mes.username === 'USER:' ? `message-personal` : ''
+            }`}
+          >
             <div className="message-content">{mes.text}</div>
             <div className="timestamp">{mes.time}</div>
             <div className="username">{mes.username}</div>
