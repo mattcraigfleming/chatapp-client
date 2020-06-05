@@ -76,7 +76,7 @@ const Chat = () => {
   return (
     <Card style={{ width: '100%' }}>
       <PageHeader
-        title="ChatApp Design Team"
+        title={<a href="">#chatapp-design-team</a>}
         className="site-page-header"
         subTitle="Space to share design ideas"
         extra={[
