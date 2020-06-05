@@ -21,7 +21,7 @@ Messages
   float: left;
   padding: 6px 10px 7px;
   border-radius: 10px 10px 10px 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.1);
   color: rgb(34, 33, 33);
   margin: 8px 0;
   font-size: 11px;
@@ -33,15 +33,15 @@ Messages
 .messages .message .timestamp {
   position: absolute;
   bottom: -28px;
-  left: -5px;
+  right: -5px;
   font-size: 9px;
   color: rgba(7, 6, 6, 0.3);
 }
 
 .messages .message .username {
   position: absolute;
-  bottom: -15px;
-  left: -5px;
+  bottom: -18px;
+  right: -5px;
   font-size: 9px;
   color: rgba(7, 6, 6, 0.3);
 }
@@ -74,7 +74,7 @@ Messages
   float: right;
   color: #fff;
   text-align: right;
-  background: linear-gradient(120deg, #248a52, #257287);
+  background: #4d926c;
   border-radius: 10px 10px 0 10px;
 }
 .messages .message.message-personal::before {

@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Button, Card, Input, PageHeader, Divider } from 'antd'
+import {
+  PhoneOutlined,
+  SettingOutlined,
+  WhatsAppOutlined,
+} from '@ant-design/icons'
 import moment from 'moment'
 import { SendOutlined } from '@ant-design/icons'
 import { useSocket } from '../../hooks/useSocket'
@@ -69,17 +74,15 @@ const Chat = () => {
   }
 
   return (
-    <Card style={{ width: '65%' }}>
+    <Card style={{ width: '100%' }}>
       <PageHeader
         title="ChatApp Design Team"
         className="site-page-header"
         subTitle="Space to share design ideas"
         extra={[
-          <Button key="3">Operation</Button>,
-          <Button key="2">Operation</Button>,
-          <Button key="1" type="primary">
-            Primary
-          </Button>,
+          <Button icon={<PhoneOutlined />} key="3" />,
+          <Button icon={<SettingOutlined />} key="2" />,
+          <Button icon={<WhatsAppOutlined />} key="1" />,
         ]}
         avatar={{
           src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4',
@@ -88,7 +91,11 @@ const Chat = () => {
       <Divider />
       <div
         className="messages"
-        style={{ height: '30vh', overflowY: 'scroll', padding: 20 }}
+        style={{
+          height: '63vh',
+          overflowY: 'scroll',
+          padding: 20,
+        }}
       >
         {botMessages.map((mes) => (
           <div className={`message`}>

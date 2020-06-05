@@ -37,8 +37,8 @@ const data = [
 const Message = () => {
   return (
     <Row>
-      <Col flex={2}>
-        <Card>
+      <Col>
+        <Card style={{ height: '90vh' }}>
           <SearchInput />
           <Divider />
           <List
@@ -57,7 +57,7 @@ const Message = () => {
           <Divider />
         </Card>
       </Col>
-      <Col flex={3}>
+      <Col>
         <Chat />
       </Col>
     </Row>
