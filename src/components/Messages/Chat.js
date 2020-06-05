@@ -19,13 +19,6 @@ const Chat = () => {
     }
   }, [socket])
 
-  useEffect(() => {
-    return () => {
-      setTyping(false)
-      clearTimeout(timeout)
-    }
-  }, [message])
-
   const timeout = setTimeout(() => {
     setTyping(true)
   }, 2000)
@@ -44,6 +37,7 @@ const Chat = () => {
 
   const handleChange = ({ target: { value } }) => {
     setMessage(value)
+    setTyping(true)
   }
   return (
     <Card style={{ width: '65%' }}>
